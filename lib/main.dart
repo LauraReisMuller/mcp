@@ -5,6 +5,7 @@ import 'features/auth/login_screen.dart';
 import 'features/auth/signup_screen.dart';
 import 'features/auth/auth_service.dart';
 import 'features/sleep_tracking/add_sleep_data_dialog.dart';
+import 'features/visualizations/sleep_graph.dart';
 
 void main() {
   runApp(const HypnosApp());
@@ -99,8 +100,7 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
         ],
       ),
-      Center(child: Text('Sleep Quality')),
-      Center(child: Text('Visualizations')),
+      const SleepQualitySection(),
       Center(child: Text('Reminders')),
       Center(child: Text('Sleep Goals')),
       Center(child: Text('Insights')),
@@ -123,7 +123,6 @@ class _MainNavigationState extends State<MainNavigation> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.bed), label: 'Track'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Quality'),
-          BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'Graphs'),
           BottomNavigationBarItem(icon: Icon(Icons.alarm), label: 'Reminders'),
           BottomNavigationBarItem(icon: Icon(Icons.flag), label: 'Goals'),
           BottomNavigationBarItem(icon: Icon(Icons.insights), label: 'Insights'),
@@ -139,5 +138,47 @@ class _MainNavigationState extends State<MainNavigation> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+}
+
+class SleepQualitySection extends StatelessWidget {
+  const SleepQualitySection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Sleep Quality',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              TextButton(
+                onPressed: () {
+                  // Navigate to detailed sleep quality page
+                },
+                child: Text(
+                  'View Details',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Divider(height: 0),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SleepGraph(),
+          ),
+        ),
+      ],
+    );
   }
 }
