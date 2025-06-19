@@ -6,6 +6,8 @@ import 'features/auth/signup_screen.dart';
 import 'features/auth/auth_service.dart';
 import 'features/sleep_tracking/add_sleep_data_dialog.dart';
 import 'features/visualizations/sleep_graph.dart';
+import 'features/reminders/reminders_page.dart';
+import 'features/music/music_section.dart';
 
 void main() {
   runApp(const HypnosApp());
@@ -101,7 +103,8 @@ class _MainNavigationState extends State<MainNavigation> {
         ],
       ),
       const SleepQualitySection(),
-      Center(child: Text('Reminders')),
+      const RemindersPage(),
+      const MusicSection(),
       Center(child: Text('Sleep Goals')),
       Center(child: Text('Insights')),
     ];
@@ -124,6 +127,7 @@ class _MainNavigationState extends State<MainNavigation> {
           BottomNavigationBarItem(icon: Icon(Icons.bed), label: 'Track'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Quality'),
           BottomNavigationBarItem(icon: Icon(Icons.alarm), label: 'Reminders'),
+          BottomNavigationBarItem(icon: Icon(Icons.music_note), label: 'Music'),
           BottomNavigationBarItem(icon: Icon(Icons.flag), label: 'Goals'),
           BottomNavigationBarItem(icon: Icon(Icons.insights), label: 'Insights'),
         ],
