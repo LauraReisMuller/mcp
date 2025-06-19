@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'mock_sleep_database.dart';
 import 'features/sleep_tracking/sleep_record_card.dart';
+import 'features/auth/login_screen.dart';
+import 'features/auth/signup_screen.dart';
+import 'features/auth/auth_service.dart';
+import 'features/sleep_tracking/add_sleep_data_dialog.dart';
 
 void main() {
   runApp(const HypnosApp());
@@ -25,12 +29,13 @@ class HypnosApp extends StatelessWidget {
           headlineSmall: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           titleMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
-        // cardTheme: CardTheme(
-        //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        //   elevation: 2,
-        // ),
       ),
-      home: const MainNavigation(),
+      initialRoute: AuthService.instance.currentUser == null ? '/login' : '/home',
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
+        '/home': (context) => const MainNavigation(),
+      },
     );
   }
 }
@@ -67,7 +72,33 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = <Widget>[
-      _buildSleepTracking(sleepRecords),
+      Stack(
+        children: [
+          _buildSleepTracking(sleepRecords),
+          Positioned(
+            bottom: 24,
+            right: 24,
+            child: FloatingActionButton.extended(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) => AddSleepDataDialog(
+                    onAdd: (data) {
+                      setState(() {
+                        sleepRecords.insert(0, data);
+                      });
+                    },
+                  ),
+                );
+              },
+              icon: const Icon(Icons.add),
+              label: const Text('Add Data'),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Colors.white,
+            ),
+          ),
+        ],
+      ),
       Center(child: Text('Sleep Quality')),
       Center(child: Text('Visualizations')),
       Center(child: Text('Reminders')),
