@@ -105,8 +105,6 @@ class _MainNavigationState extends State<MainNavigation> {
       const SleepQualitySection(),
       const RemindersPage(),
       const MusicSection(),
-      Center(child: Text('Sleep Goals')),
-      Center(child: Text('Insights')),
     ];
     return Scaffold(
       appBar: AppBar(
@@ -128,8 +126,6 @@ class _MainNavigationState extends State<MainNavigation> {
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Quality'),
           BottomNavigationBarItem(icon: Icon(Icons.alarm), label: 'Reminders'),
           BottomNavigationBarItem(icon: Icon(Icons.music_note), label: 'Music'),
-          BottomNavigationBarItem(icon: Icon(Icons.flag), label: 'Goals'),
-          BottomNavigationBarItem(icon: Icon(Icons.insights), label: 'Insights'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Theme.of(context).colorScheme.primary,
