@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'firebase_sleep_database.dart';
 import 'features/sleep_tracking/sleep_record_card.dart';
 import 'features/auth/login_screen.dart';
@@ -9,7 +10,17 @@ import 'features/visualizations/sleep_graph.dart';
 import 'features/reminders/reminders_page.dart';
 import 'features/music/music_section.dart';
 
-void main() {
+void main() async {
+await Firebase.initializeApp(
+  options: FirebaseOptions(
+    apiKey: "",
+    appId: "1:1234567890:web:abcdef123456",
+    messagingSenderId: "1234567890",
+    projectId: "no-code-etapa-3",
+    authDomain: "no-code-etapa-3.firebaseapp.com",
+    storageBucket: "no-code-etapa-3.appspot.com",
+  ),
+);
   runApp(const HypnosApp());
 }
 
