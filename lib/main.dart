@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'mock_sleep_database.dart';
+import 'firebase_sleep_database.dart';
 import 'features/sleep_tracking/sleep_record_card.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/signup_screen.dart';
@@ -53,8 +53,22 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  // Example: Fetch mock data for Sleep Tracking page
-  List<Map<String, dynamic>> sleepRecords = MockSleepDatabase.getAllRecords();
+  List<Map<String, dynamic>> sleepRecords = [];
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchSleepRecords();
+  }
+
+  Future<void> _fetchSleepRecords() async {
+    final records = await FirebaseSleepDatabase.getAllRecords();
+    setState(() {
+      sleepRecords = records;
+      _loading = false;
+    });
+  }
 
   static Widget _buildSleepTracking(List<Map<String, dynamic>> records) {
     return ListView.builder(
@@ -77,7 +91,9 @@ class _MainNavigationState extends State<MainNavigation> {
     final List<Widget> pages = <Widget>[
       Stack(
         children: [
-          _buildSleepTracking(sleepRecords),
+          _loading
+              ? const Center(child: CircularProgressIndicator())
+              : _buildSleepTracking(sleepRecords),
           Positioned(
             bottom: 24,
             right: 24,
@@ -86,10 +102,9 @@ class _MainNavigationState extends State<MainNavigation> {
                 await showDialog(
                   context: context,
                   builder: (context) => AddSleepDataDialog(
-                    onAdd: (data) {
-                      setState(() {
-                        sleepRecords.insert(0, data);
-                      });
+                    onAdd: (data) async {
+                      await FirebaseSleepDatabase.addRecord(data);
+                      await _fetchSleepRecords();
                     },
                   ),
                 );

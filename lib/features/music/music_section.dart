@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MusicSection extends StatelessWidget {
-  const MusicSection({Key? key}) : super(key: key);
+  const MusicSection({super.key});
 
   @override
   Widget build(BuildContext context) {

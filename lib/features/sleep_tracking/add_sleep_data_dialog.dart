@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AddSleepDataDialog extends StatefulWidget {
   final void Function(Map<String, dynamic>) onAdd;
-  const AddSleepDataDialog({Key? key, required this.onAdd}) : super(key: key);
+  const AddSleepDataDialog({super.key, required this.onAdd});
 
   @override
   State<AddSleepDataDialog> createState() => _AddSleepDataDialogState();
