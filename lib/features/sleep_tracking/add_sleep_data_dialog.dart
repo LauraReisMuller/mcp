@@ -60,7 +60,7 @@ class _AddSleepDataDialogState extends State<AddSleepDataDialog> {
               widget.onAdd({
                 'sleepTime': _sleepTimeController.text,
                 'wakeTime': _wakeTimeController.text,
-                'quality': _qualityController.text,
+                'quality': int.tryParse(_qualityController.text) ?? 1,
                 'notes': _notesController.text,
                 'date': DateTime.now(),
               });

@@ -20,7 +20,12 @@ class SleepGraph extends StatelessWidget {
         }
         // Prepare data for the graph
         final List<DateTime> dates = records.map((r) => r['date'] as DateTime).toList();
-        final List<int> qualities = records.map((r) => r['quality'] as int).toList();
+        final List<int> qualities = records.map((r) {
+          final q = r['quality'];
+          if (q is int) return q;
+          if (q is String) return int.tryParse(q) ?? 1;
+          return 1;
+        }).toList();
         final double avgQuality = qualities.isNotEmpty
             ? qualities.reduce((a, b) => a + b) / qualities.length
             : 0;
